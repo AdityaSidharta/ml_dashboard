@@ -1,0 +1,97 @@
+prediction:
+  - source: "csv"
+  - source_path: "/path/to"
+  - table_name: "prediction"
+  - primary_key: "prediction_id"
+  - timestamp: "prediction_timestamp"
+  - prediction_value: "prediction_value"
+groundtruth:
+  - source: "postgres"
+  - source_path: "postgresql://username:password@127.0.0.1:9696"
+  - table_name: "prediction"
+  - primary_key: "prediction_id"
+  - target_value: "target_value"
+prediction-cards:
+  - row:
+    - {
+      name: "Number of Query per day"
+      col: "prediction_id"
+      type: "time-series"
+      aggregation: "count"
+      grouper: "institutions"
+      granularity: "day"
+    }
+  - row:
+      - {
+          name: "Distribution of the Prediction"
+          col: "prediction_value"
+          type: "distribution"
+          grouper: "institutions"
+          granularity: "month"
+      }
+      - {
+          name: "Average Prediction per class"
+          col: "prediction_value"
+          type: "bar"
+          aggregation: "mean"
+          grouper: "class"
+          granularity: "month"
+      }
+  - row:
+      - {
+          name: "Age Distribution between different gender"
+          col: "age"
+          type: "distribution"
+          grouper: "gender"
+          granularity: "month"
+      }
+      - {
+          name: "Number of Queried Class per Institution"
+          col: "class"
+          type: "bar"
+          aggregation: "count"
+          grouper: "institution"
+          granularity: "month"
+      }
+      - {
+          name: "Average Age per Institution"
+          col: "age"
+          type: "bar"
+          aggregation: "mean"
+          grouper: "institution"
+          granularity: "month"
+      }
+groundtruth-cards:
+  - row:
+      - {
+          name: "Root Mean Squared Error per Institution"
+          col: "prediction_rmse"
+          type: "time-series"
+          aggregation: "mean"
+          grouper: "institution"
+          granularity: "hour"
+      }
+  - row:
+      - {
+          name: "Mean Absolute Percentage error per Class"
+          col: "prediction_mape"
+          type: "distribution"
+          grouper: "class"
+          granularity: "month"
+      }
+      - {
+          name: "Mean Absolute Percentage error per Gender"
+          col: "prediction_mape"
+          type: "bar"
+          aggregation: "mean"
+          grouper: "gender"
+          granularity: "hour"
+      }
+      - {
+          name: "Mean Absolute Percentage error per Institution"
+          col: "prediction_mape"
+          type: "bar"
+          aggregation: "median"
+          grouper: "gender"
+          granularity: "day"
+      }
