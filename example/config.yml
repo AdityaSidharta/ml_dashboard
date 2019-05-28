@@ -74,22 +74,22 @@ groundtruth-cards:
   - row:
       - {
           name: "Mean Absolute Percentage error per Class"
-          col: "prediction_mape"
+          col: "absolute_percentage_error"
           type: "distribution"
           grouper: "class"
           granularity: "month"
       }
       - {
-          name: "Mean Absolute Percentage error per Gender"
-          col: "prediction_mape"
+          name: "Mean Squared Error error per Gender"
+          col: "squared_error"
           type: "bar"
           aggregation: "mean"
           grouper: "gender"
           granularity: "hour"
       }
       - {
-          name: "Mean Absolute Percentage error per Institution"
-          col: "prediction_mape"
+          name: "Mean Absolute Error per Institution"
+          col: "absolute_error"
           type: "bar"
           aggregation: "median"
           grouper: "gender"
