@@ -8,6 +8,11 @@ verify_ssl = true
 [packages]
 pandas = "*"
 numpy = "*"
+dash-bootstrap-components = "*"
+plotly = "*"
+dash = "*"
+dash-daq = "*"
+oyaml = "*"
 
 [requires]
 python_version = "3.7"

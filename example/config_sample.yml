@@ -1,14 +1,14 @@
 prediction:
   source: "csv"
-  source_path: "/path/to"
+  source_path: "/home/aditya/extrahd/ml_dashboard/example/data"
   table_name: "prediction"
   primary_key: "prediction_id"
   timestamp: "prediction_timestamp"
   prediction_value: "prediction_value"
 groundtruth:
-  source: "postgres"
-  source_path: "postgresql://username:password@127.0.0.1:9696"
-  table_name: "prediction"
+  source: "csv"
+  source_path: "/home/aditya/extrahd/ml_dashboard/example/data"
+  table_name: "groundtruth"
   primary_key: "prediction_id"
   target_value: "target_value"
 prediction-cards:
