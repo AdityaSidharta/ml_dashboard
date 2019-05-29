@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+ipykernel = "*"
 
 [packages]
 pandas = "*"
@@ -13,6 +14,7 @@ plotly = "*"
 dash = "*"
 dash-daq = "*"
 oyaml = "*"
+plotly-express = "*"
 
 [requires]
 python_version = "3.7"
