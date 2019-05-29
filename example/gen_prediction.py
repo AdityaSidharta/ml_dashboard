@@ -23,11 +23,11 @@ def generate_prediction(start_date: str, end_date: str, n_samples: int, path: st
         gender = np.random.choice(genders, size=1).item()
 
         if phone_class == "low":
-            value = np.abs(np.random.normal(loc=1000, scale=100., size=1).item())
+            value = np.abs(np.random.normal(loc=1000, scale=100.0, size=1).item())
         elif phone_class == "mid":
-            value = np.abs(np.random.normal(loc=2000, scale=200., size=1).item())
+            value = np.abs(np.random.normal(loc=2000, scale=200.0, size=1).item())
         elif phone_class == "high":
-            value = np.abs(np.random.normal(loc=3000, scale=300., size=1).item())
+            value = np.abs(np.random.normal(loc=3000, scale=300.0, size=1).item())
         else:
             raise ValueError("Class not recognized")
 

@@ -30,11 +30,11 @@ def generate_groundtruth(n_samples: int, prediction_path: str, groundtruth_path:
         prediction_value = rows["prediction_value"]
 
         if phone_class == "low":
-            true_value = np.abs(np.random.normal(loc=1000, scale=200., size=1).item())
+            true_value = np.abs(np.random.normal(loc=1000, scale=200.0, size=1).item())
         elif phone_class == "mid":
-            true_value = np.abs(np.random.normal(loc=2000, scale=400., size=1).item())
+            true_value = np.abs(np.random.normal(loc=2000, scale=400.0, size=1).item())
         elif phone_class == "high":
-            true_value = np.abs(np.random.normal(loc=3000, scale=600., size=1).item())
+            true_value = np.abs(np.random.normal(loc=3000, scale=600.0, size=1).item())
         else:
             raise ValueError("Class not recognized")
 
