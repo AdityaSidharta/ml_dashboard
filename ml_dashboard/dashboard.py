@@ -56,19 +56,22 @@ def get_row(n):
                 [
                     html.Div(
                         [
-                            html.H4(
-                                "hello".upper(),
-                                style={
-                                    "font-size": "normal",
-                                    "font-family": "Helvetica",
-                                    "color": "black",
-                                    "text-align": "center",
-                                    "vertical-align": "center",
-                                },
+                            html.A(
+                                html.H6(
+                                    "hello".upper(),
+                                    style={
+                                        "font-size": "large",
+                                        "font-family": "Roboto",
+                                        "color": "black",
+                                        "text-align": "center",
+                                        "vertical-align": "center",
+                                        "padding": "10px",
+                                    },
+                                )
                             ),
                             get_graph(),
                         ],
-                        style={"backgroundColor": "white"},
+                        style={"backgroundColor": "white", "border": "0.5px solid #E1E0E2"},
                     )
                 ],
                 style={"margin-top": 4, "margin-left": 4, "margin-right": 4, "margin-bottom": 4},
@@ -97,7 +100,7 @@ def create_app(metadata):
         __name__, assets_folder="/home/adityasidharta/git/ml_dashboard/assets", external_stylesheets=[dbc.themes.GRID]
     )
     layouts = [get_navbar(), get_body([1, 2, 3])]
-    app.layout = html.Div(layouts, style={"backgroundColor": "#white"})
+    app.layout = html.Div(layouts, style={"backgroundColor": "white"})
     return app
 
 
