@@ -97,7 +97,7 @@ def get_graph():
 
 def create_app(metadata):
     app = dash.Dash(
-        __name__, assets_folder="/home/adityasidharta/git/ml_dashboard/assets", external_stylesheets=[dbc.themes.GRID]
+        __name__, assets_folder="/home/aditya/extrahd/ml_dashboard/ml_dashboard/assets", external_stylesheets=[dbc.themes.BOOTSTRAP]
     )
     layouts = [get_navbar(), get_body([1, 2, 3])]
     app.layout = html.Div(layouts, style={"backgroundColor": "white"})
