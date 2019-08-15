@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-from ml_dashboard.io import read_yaml
+from hello.io import read_yaml
 
 
 class Metadata:
@@ -15,8 +15,8 @@ class Metadata:
         self.groundtruth_key = None
         self.groundtruth_value = None
 
-        self.prediction_cards = {}
-        self.groundtruth_cards = {}
+        self.prediction_cards = []
+        self.groundtruth_cards = []
 
         if config is not None:
             self.load_config(config)
@@ -57,7 +57,7 @@ class Metadata:
         else:
             raise NotImplementedError("Other form of sources is not supported yet")
 
-    def insert_cards(self, card_type, row, name, col, plot_type, grouper, granularity, aggregation):
+    def insert_cards(self, card_type, name, col, plot_type, grouper, granularity, aggregation):
         if card_type == "prediction":
             cards = self.prediction_cards
         elif card_type == "groundtruth":
@@ -65,9 +65,7 @@ class Metadata:
         else:
             raise ValueError("Unrecognized card_type")
 
-        if row not in cards.keys():
-            cards[row] = []
-        cards[row].append(
+        cards.append(
             {
                 "name": name,
                 "col": col,
@@ -78,16 +76,14 @@ class Metadata:
             }
         )
 
-    def delete_cards(self, card_type, row, idx):
+    def delete_cards(self, card_type, idx):
         if card_type == "prediction":
             cards = self.prediction_cards
         elif card_type == "groundtruth":
             cards = self.groundtruth_cards
         else:
             raise ValueError("Unrecognized card_type")
-
-        assert row in cards.keys()
-        del cards[row][idx]
+        del cards[idx]
 
     def load_config(self, config):
         config_dict = read_yaml(config)
@@ -117,7 +113,6 @@ class Metadata:
                 aggregation = None
             self.insert_cards(
                 "prediction",
-                value["row"],
                 value["name"],
                 value["col"],
                 value["type"],
@@ -132,7 +127,6 @@ class Metadata:
                 aggregation = None
             self.insert_cards(
                 "groundtruth",
-                value["row"],
                 value["name"],
                 value["col"],
                 value["type"],

@@ -1,44 +1,15 @@
-import plotly
-import plotly_express as px
 from plotly import graph_objs as go
 import dash
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 import dash_html_components as html
-from dash.dependencies import Input, Output, State
 import random
+
+from hello.metadata import Metadata
+from hello.bootstrap import navbar
 
 PLOTLY_LOGO = "https://images.plot.ly/logo/new-branding/plotly-logomark.png"
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
-
-
-def get_navbar():
-    logo = dbc.Container(
-        [
-            html.A(
-                # Use row and col to control vertical alignment of logo / brand
-                dbc.Row([dbc.Col(html.Img(src=PLOTLY_LOGO, height="40px"))], align="center", no_gutters=True),
-                href="https://plot.ly",
-            )
-        ]
-    )
-
-    # this is the default navbar style created by the NavbarSimple component
-    navbar = dbc.NavbarSimple(
-        children=[
-            dbc.NavItem(dbc.NavLink("Prediction", href="#")),
-            dbc.NavItem(dbc.NavLink("Groundtruth", href="#")),
-            logo,
-        ],
-        brand="Machine Learning Dashboard",
-        brand_href="#",
-        sticky="top",
-        className="mb-5",
-        color="dark",
-        dark=True,
-    )
-
-    return navbar
 
 
 def get_body(ns):
@@ -92,15 +63,59 @@ def get_graph():
     return graph
 
 
+def get_card(
+    prediction_df,
+    prediction_key,
+    prediction_timestamp,
+    prediction_value,
+    name,
+    col,
+    plot_type,
+    grouper,
+    granularity,
+    aggregation,
+):
+    card = dbc.Card([dbc.CardHeader(name), dbc.CardBody([get_graph()])], color="success")
+    container = dbc.Container(dbc.Row(dbc.Col(card)))
+    return container
+
+
 def create_app(metadata):
     app = dash.Dash(
-        __name__, assets_folder="/home/aditya/extrahd/ml_dashboard/ml_dashboard/assets", external_stylesheets=[dbc.themes.BOOTSTRAP]
+        __name__,
+        assets_folder="/home/aditya/extrahd/ml_dashboard/ml_dashboard/assets",
+        external_stylesheets=[dbc.themes.BOOTSTRAP],
     )
-    layouts = [get_navbar(), get_body([1, 2, 3])]
-    app.layout = html.Div(layouts, style={"backgroundColor": "#white"})
+
+    layouts = []
+    layouts.append(navbar())
+    for idx, prediction_card in enumerate(metadata.prediction_cards):
+        name = prediction_card["name"]
+        col = prediction_card["col"]
+        plot_type = prediction_card["plot_type"]
+        grouper = prediction_card["grouper"]
+        granularity = prediction_card["granularity"]
+        aggregation = prediction_card["aggregation"]
+        layouts.append(
+            get_card(
+                metadata.prediction_df,
+                metadata.prediction_key,
+                metadata.prediction_timestamp,
+                metadata.prediction_value,
+                name,
+                col,
+                plot_type,
+                grouper,
+                granularity,
+                aggregation,
+            )
+        )
+    app.layout = html.Div(layouts, style={"backgroundColor": "#white"}, className="app")
     return app
 
 
 if __name__ == "__main__":
-    app = create_app(None)
+    meta = Metadata()
+    meta.load_config('/home/aditya/extrahd/ml_dashboard/example/config_example.yml')
+    app = create_app(meta)
     app.run_server(debug=True, port=8090)
